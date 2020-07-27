@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.cyuan.mysampleforkotlin.sample.video.MediaPlayerStatus" />
+
+        <variable
+            name="timeUnit"
+            type="com.cyuan.mysampleforkotlin.MyTimeUnit" />
+
+        <variable
+            name="vm"
+            type="com.cyuan.mysampleforkotlin.sample.video.VideoViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:gravity="bottom|center_horizontal"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/flVideoPanel"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <SurfaceView
+                android:id="@+id/svVideo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvVideoName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@{vm.mediaName}"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            tools:text="F.I.R. 飛兒樂團 - Lydia (official 官方完整版MV)" />
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{vm.mediaInformation}"
+            android:textColor="#AAAAAA"
+            tools:text="F.I.R.飛兒樂團" />
+
+        <SeekBar
+            android:id="@+id/sbCurrentPosition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="@{vm.mediaTotalLength}"
+            android:progress="@{vm.mediaCurrentPosition}"
+            tools:max="100"
+            tools:progress="25" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvCurrentPosition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="16dp"
+                android:text="@{timeUnit.convertMillisecondsToTime(vm.mediaCurrentPosition)}"
+                android:textColor="#AAAAAA"
+                tools:text="0:00:00" />
+
+            <TextView
+                android:id="@+id/tvTotalLength"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:text="@{timeUnit.convertMillisecondsToTime(vm.mediaTotalLength)}"
+                android:textColor="#AAAAAA"
+                tools:text="0:05:00" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/ibPrevious"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:background="@null"
+                app:srcCompat="@android:drawable/ic_media_previous" />
+
+            <ImageButton
+                android:id="@+id/ibPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_play"
+                android:src="@{vm.mediaPlayerStatus == MediaPlayerStatus.Start? @android:drawable/ic_media_pause : @android:drawable/ic_media_play}"
+                tools:src="@android:drawable/ic_media_play" />
+
+            <ImageButton
+                android:id="@+id/ibNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:background="@null"
+                app:srcCompat="@android:drawable/ic_media_next" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="@{vm.mediaPlayerStatus.toString()}"
+            android:textColor="#FFFFFF"
+            tools:text="影片載入中" />
+    </LinearLayout>
+</layout>

@@ -2,10 +2,7 @@ package com.cyuan.mysampleforkotlin.main
 
 import android.content.Intent
 import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.cyuan.mysampleforkotlin.R
-import com.cyuan.mysampleforkotlin.sample.VideoControllerActivity
 import kotlinx.android.synthetic.main.item_sample.view.*
 
 class SampleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -29,7 +26,7 @@ class SampleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View
             }
         }
 
-        itemView.setOnClickListener(this)
+        itemView.btnGo.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
