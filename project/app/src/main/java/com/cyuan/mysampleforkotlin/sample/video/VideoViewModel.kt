@@ -21,6 +21,8 @@ class VideoViewModel(application: Application, private val repository: VideoRepo
     val mediaTotalLength = MutableLiveData<Int>()
     val mediaCurrentPosition = MutableLiveData<Int>()
     val mediaUri = MutableLiveData<Uri>()
+    val mediaWidth = MutableLiveData<Int>()
+    val mediaHeight = MutableLiveData<Int>()
 
     val displayViewStatus = MutableLiveData<DisplayViewStatus>()
 
@@ -36,6 +38,8 @@ class VideoViewModel(application: Application, private val repository: VideoRepo
         mediaTotalLength.value = 0
         mediaCurrentPosition.value = 0
         mediaUri.value = Uri.EMPTY
+        mediaWidth.value = 0
+        mediaHeight.value = 0
 
         isTouchProgressBar.value = false
     }

@@ -73,9 +73,11 @@ class VideoActivity : AppCompatActivity(), SurfaceHolder.Callback, SeekBar.OnSee
 
                 }
                 MediaPlayerStatus.NotFoundMedia -> {
+                    resetDisplaySize(0, 0)
                     mediaPlayer.reset()
                 }
                 MediaPlayerStatus.FoundMedia -> {
+                    resetDisplaySize(0, 0)
                     mediaPlayer.reset()
                     mediaPlayer.setDataSource(this, viewModel.mediaUri.value!!)
                     viewModel.callMediaPlayerPrepare()
@@ -86,6 +88,7 @@ class VideoActivity : AppCompatActivity(), SurfaceHolder.Callback, SeekBar.OnSee
                 MediaPlayerStatus.Ready -> {
                     mediaPlayer.seekTo(viewModel.mediaCurrentPosition.value!!)
                     viewModel.setMediaInfo(mediaPlayer.duration)
+                    resetDisplaySize(viewModel.mediaWidth.value!!, viewModel.mediaHeight.value!!)
 
                     // 自動撥放
                     viewModel.callMediaPlayerStart()
@@ -176,7 +179,11 @@ class VideoActivity : AppCompatActivity(), SurfaceHolder.Callback, SeekBar.OnSee
     }
 
     override fun onVideoSizeChanged(p0: MediaPlayer?, videoWidth: Int, videoHeight: Int) {
+        viewModel.mediaWidth.value = videoWidth
+        viewModel.mediaHeight.value = videoHeight
+    }
 
+    private fun resetDisplaySize(videoWidth: Int, videoHeight: Int) {
         val displayWidth = flVideoPanel.width
         val displayHeight = flVideoPanel.height
 
