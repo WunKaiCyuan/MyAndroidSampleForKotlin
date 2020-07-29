@@ -3,4 +3,10 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="instagram_icon_color">#262626</color>
+    <color name="instagram_icon_heart_high_color">#C75450</color>
+    <color name="instagram_icon_bookmark_high_color">#FFD767</color>
+    <color name="instagram_text_color">#262626</color>
+    <color name="instagram_text_color2">#000000</color>
+    <color name="instagram_text_color3">#666868</color>
 </resources>

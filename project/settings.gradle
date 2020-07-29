@@ -1,2 +1,3 @@
+include ':CustomView'
 include ':app'
 rootProject.name = "MySampleForKotlin"

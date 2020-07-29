@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="index"
+            type="int" />
+
+        <variable
+            name="viewModel"
+            type="com.cyuan.mysampleforkotlin.sample.instagram.viewmodel.HomeViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:onClick="@{(view)->viewModel.onPostUserClick(index)}">
+
+                <com.cyuan.customview.RoundImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:background="@{ viewModel.postList.get(index).newDynamic ? @drawable/btn_instagram_user_high : @drawable/btn_instagram_user }"
+                    android:padding="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/instagram_character"
+                    tools:background="@drawable/btn_instagram_user_high" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@{viewModel.postList.get(index).postUserName}"
+                android:textColor="@color/instagram_text_color2"
+                android:textSize="14sp"
+                tools:text="user_nana" />
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:onClick="@{(view)->viewModel.onPostMoreClick(index)}"
+                android:src="@drawable/ic_more" />
+
+        </LinearLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp">
+
+            <ImageButton
+                android:id="@+id/ibHeart"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentStart="true"
+                android:background="@null"
+                android:onClick="@{(view)->viewModel.onPostHeartClick(index)}"
+                android:src="@{viewModel.postList.get(index).heart ? @drawable/ic_heart_high : @drawable/ic_heart}"
+                tools:src="@drawable/ic_heart_high" />
+
+            <ImageButton
+                android:id="@+id/ibComment"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_toEndOf="@+id/ibHeart"
+                android:background="@null"
+                android:onClick="@{(view)->viewModel.onPostCommentClick(index)}"
+                android:src="@drawable/ic_comment" />
+
+            <ImageButton
+                android:id="@+id/ibSend"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_toEndOf="@+id/ibComment"
+                android:background="@null"
+                android:onClick="@{(view)->viewModel.onPostSendCommentClick(index)}"
+                android:src="@drawable/ic_send" />
+
+            <ImageButton
+                android:id="@+id/ibBookmark"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:background="@null"
+                android:onClick="@{(view)->viewModel.onPostBookmarkClick(index)}"
+                android:src="@{viewModel.postList.get(index).bookmark ? @drawable/ic_bookmark_high : @drawable/ic_bookmark}"
+                tools:src="@drawable/ic_bookmark_high" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:orientation="horizontal"
+            android:visibility="@{ viewModel.postList.get(index).likeUserName.size() > 0 || viewModel.postList.get(index).otherLikeUser ? View.VISIBLE : View.GONE}"
+            tools:ignore="RtlSymmetry">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.likeNameContent(index)}"
+                android:textColor="@color/instagram_text_color2"
+                android:textStyle="bold"
+                tools:text="cyuan" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="和"
+                android:textColor="@color/instagram_text_color"
+                android:visibility="@{viewModel.postList.get(index).otherLikeUser ? View.VISIBLE : View.GONE}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{(view)->viewModel.onOtherLikeUserClick(index)}"
+                android:text="其他人"
+                android:textColor="@color/instagram_text_color2"
+                android:textStyle="bold"
+                android:visibility="@{viewModel.postList.get(index).otherLikeUser ? View.VISIBLE : View.GONE}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="都說讚"
+                android:textColor="@color/instagram_text_color"
+                android:visibility="@{ viewModel.postList.get(index).likeUserName.size() > 0 || viewModel.postList.get(index).otherLikeUser ? View.VISIBLE : View.GONE}" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{viewModel.postList.get(index).postUserName}"
+            android:textColor="@color/instagram_text_color2"
+            android:textStyle="bold"
+            android:visibility="@{viewModel.postList.get(index).messageUserName != null ? View.VISIBLE : View.GONE}"
+            tools:ignore="RtlSymmetry"
+            tools:text="cyuan" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:visibility="@{viewModel.postList.get(index).messageContent != null? View.VISIBLE : View.GONE}"
+            tools:ignore="RtlSymmetry">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:singleLine="true"
+                android:text="@{viewModel.postList.get(index).contentText}"
+                android:textColor="@color/instagram_text_color"
+                tools:text="我要成為好的RD\n就這樣" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{(view)->viewModel.onPostContentMoreContentClick(index)}"
+                android:singleLine="true"
+                android:text=".....更多內容"
+                android:textColor="@color/instagram_text_color3" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{viewModel.totalMessageContent(index)}"
+            android:textColor="@color/instagram_text_color3"
+            android:textSize="12sp"
+            android:visibility="@{viewModel.postList.get(index).totalMessage > 1 ? View.VISIBLE : View.GONE}"
+            tools:ignore="RtlSymmetry"
+            tools:text="查看全部100則留言" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{viewModel.postList.get(index).messageUserName}"
+            android:textColor="@color/instagram_text_color2"
+            android:textStyle="bold"
+            android:visibility="@{viewModel.postList.get(index).messageUserName != null ? View.VISIBLE : View.GONE}"
+            tools:ignore="RtlSymmetry"
+            tools:text="diane" />
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{viewModel.postList.get(index).messageContent}"
+            android:textColor="@color/instagram_text_color"
+            tools:ignore="RtlSymmetry"
+            tools:text="我要成為好的PM" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginHorizontal="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.cyuan.customview.RoundImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:background="@{ viewModel.postList.get(index).newDynamic ? @drawable/btn_instagram_user_high : @drawable/btn_instagram_user }"
+                android:padding="1dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/instagram_character"
+                tools:background="@drawable/btn_instagram_user_high" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="留言回應‧‧‧‧‧"
+                android:textColor="@color/instagram_text_color"
+                android:textColorHint="@color/instagram_text_color3"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@null"
+                android:src="@drawable/ic_heart_solid" />
+
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@null"
+                android:src="@drawable/ic_smile" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:text="@{viewModel.howLongContent(index)}"
+            android:textColor="@color/instagram_text_color3"
+            android:textSize="12sp"
+            tools:ignore="RtlSymmetry"
+            tools:text="2天前" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="#DBDBDB" />
+    </LinearLayout>
+</layout>
